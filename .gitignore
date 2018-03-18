@@ -1,0 +1,11 @@
+# OSX
+.DS_Store
+
+# EXPO
+.expo
+
+# NODE
+node_modules
+
+# LOGS
+*.log
