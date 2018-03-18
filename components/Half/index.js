@@ -4,34 +4,6 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import styles from './styles';
 
 class Half extends Component {
-  viewStyle = () => {
-    const { side, runningSide } = this.props;
-
-    if (!runningSide) {
-      return styles.paused;
-    }
-
-    if (side === runningSide) {
-      return styles.active;
-    }
-
-    return styles.inactive;
-  }
-
-  textStyle = () => {
-    const { side, runningSide } = this.props;
-
-    if (!runningSide) {
-      return styles.pausedText;
-    }
-
-    if (side === runningSide) {
-      return styles.activeText;
-    }
-
-    return styles.inactiveText;
-  }
-
   rotatedText = () => {
     const { side } = this.props;
 
