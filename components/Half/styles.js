@@ -16,19 +16,19 @@ const styles = StyleSheet.create({
   rotatedText: {
     transform: [{ rotate: '180deg' }],
   },
-  paused: {
+  pausedView: {
     backgroundColor: '#cccccc',
   },
   pausedText: {
     color: '#000000',
   },
-  active: {
+  activeView: {
     backgroundColor: '#91C4C5',
   },
   activeText: {
     color: '#000000',
   },
-  inactive: {
+  inactiveView: {
     backgroundColor: '#000000',
   },
   inactiveText: {

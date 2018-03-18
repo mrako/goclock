@@ -40,13 +40,27 @@ class Half extends Component {
     }
   }
 
+  viewState = () => {
+    const { side, runningSide } = this.props;
+
+    if (!runningSide) {
+      return 'paused';
+    }
+
+    if (side === runningSide) {
+      return 'active';
+    }
+
+    return 'inactive';
+  }
+
   render() {
     const { handlePress } = this.props;
 
     return (
-      <TouchableOpacity style={[styles.container, this.viewStyle()]} onPress={handlePress}>
+      <TouchableOpacity style={[styles.container, styles[`${this.viewState()}View`]]} onPress={handlePress}>
         <View>
-          <Text style={[styles.text, this.rotatedText(), this.textStyle()]}>1:00</Text>
+          <Text style={[styles.text, this.rotatedText(), styles[`${this.viewState()}Text`]]}>1:00</Text>
         </View>
       </TouchableOpacity>
     );
