@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import Player from './Player';
 
+import Button from './components/Button';
 import Half from './components/Half';
 
 import styles from './styles';
@@ -31,6 +32,14 @@ class Game extends Component {
     }
   }
 
+  handlePause = () => {
+    const { homePlayer, guestPlayer } = this.state;
+
+    homePlayer.stop();
+    guestPlayer.stop();
+    this.setState({ runningSide: null });
+  }
+
   render() {
     const { runningSide, homePlayer, guestPlayer } = this.state;
 
@@ -38,6 +47,7 @@ class Game extends Component {
       <View style={styles.container}>
         <Half side="guest" player={guestPlayer} runningSide={runningSide} handlePress={() => this.handlePress('guest')} />
         <Half side="home" player={homePlayer} runningSide={runningSide} handlePress={() => this.handlePress('home')} />
+        <Button handlePause={this.handlePause}/>
       </View>
     );
   }
