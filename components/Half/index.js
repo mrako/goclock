@@ -4,12 +4,20 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import styles from './styles';
 
 class Half extends Component {
+  state = { time: null }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   rotatedText = () => {
     const { side } = this.props;
 
-    if (side === 'guest') {
-      return styles.rotatedText;
-    }
+    return side === 'guest' ? styles.rotatedText : {};
   }
 
   viewState = () => {
@@ -27,12 +35,13 @@ class Half extends Component {
   }
 
   render() {
-    const { handlePress } = this.props;
+    const { player, handlePress } = this.props;
 
     return (
       <TouchableOpacity style={[styles.container, styles[`${this.viewState()}View`]]} onPress={handlePress}>
         <View>
-          <Text style={[styles.text, this.rotatedText(), styles[`${this.viewState()}Text`]]}>1:00</Text>
+          <Text>{this.state.time}</Text>
+          <Text style={[styles.text, this.rotatedText(), styles[`${this.viewState()}Text`]]}>{player.currentTime()}</Text>
         </View>
       </TouchableOpacity>
     );
