@@ -7,12 +7,18 @@ class Player {
     this.periods = periods;
 
     this.mainRemaining = this.main * 1000; // * 60 * 1000;
+    this.byoyomiRemaining = this.byoyomi * 5 * 1000;
+    this.periodsRemaining = this.periods;
 
     this.startTime = null;
   }
 
-  currentTime() {
+  currentMainTime() {
     const now = moment().format('x');
+
+    if (!this.mainRemaining) {
+      return 0;
+    }
 
     let current = this.mainRemaining;
 
@@ -21,14 +27,60 @@ class Player {
     }
 
     if (current <= 0) {
-      return 'LOST';
+      this.mainRemaining = null;
+      this.startTime = now;
+
+      return 0;
     }
 
-    return moment(current).format('m:ss');
+    return current;
+  }
+
+  currentByoyomiTime() {
+    const now = moment().format('x');
+
+    let current = this.byoyomiRemaining;
+
+    if (this.startTime) {
+      current -= (now - this.startTime);
+    }
+
+    if (current <= 0) {
+      this.byoyomiRemaining = null;
+      return this.byoyomiRemaining;
+    }
+
+    return current;
+  }
+
+  currentTime() {
+    const currentMainTime = this.currentMainTime();
+
+    if (currentMainTime > 0) {
+      return currentMainTime;
+    }
+
+    const currentByoyomiTime = this.currentByoyomiTime();
+
+    if (currentByoyomiTime > 0) {
+      return currentByoyomiTime;
+    }
+
+    return 0;
+  }
+
+  currentTimeString() {
+    const currentTime = this.currentTime();
+
+    if (currentTime > 0) {
+      return moment(currentTime).format('m:ss');
+    }
+
+    return 'LOST';
   }
 
   outOfTime() {
-    return this.currentTime() === 'LOST';
+    return !this.currentMainTime() && !this.currentByoyomiTime();
   }
 
   start() {

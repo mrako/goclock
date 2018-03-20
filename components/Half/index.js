@@ -34,7 +34,7 @@ class Half extends Component {
     return (
       <TouchableOpacity style={[styles.container, styles[`${this.viewState()}View`]]} onPress={handlePress}>
         <View>
-          <Text style={[styles.text, this.rotatedText(), styles[`${this.viewState()}Text`]]}>{player.currentTime()}</Text>
+          <Text style={[styles.text, this.rotatedText(), styles[`${this.viewState()}Text`]]}>{player.currentTimeString()}</Text>
         </View>
       </TouchableOpacity>
     );
