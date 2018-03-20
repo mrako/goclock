@@ -2,11 +2,11 @@ import moment from 'moment';
 
 class Player {
   constructor(main, byoyomi, periods) {
-    this.main = main * 1000;
-    this.byoyomi = byoyomi * 5 * 1000;
+    this.main = main * 1000; // * 60 * 1000;
+    this.byoyomi = byoyomi * 10 * 1000;
     this.periods = periods;
 
-    this.mainRemaining = this.main; // * 60 * 1000;
+    this.mainRemaining = this.main;
     this.byoyomiRemaining = this.byoyomi;
     this.periodsRemaining = this.periods;
 
@@ -28,7 +28,9 @@ class Player {
 
     if (current <= 0) {
       this.mainRemaining = null;
-      this.startTime = now;
+      if (this.startTime) {
+        this.startTime = now;
+      }
 
       return 0;
     }
@@ -48,8 +50,10 @@ class Player {
     if (current <= 0) {
       if (this.periodsRemaining > 0) {
         this.periodsRemaining -= 1;
-        this.startTime = now;
         this.byoyomiRemaining = this.byoyomi;
+        if (this.startTime) {
+          this.startTime = now;
+        }
       }
 
       if (this.periodsRemaining === 0) {
@@ -100,6 +104,7 @@ class Player {
     if (this.startTime) {
       const stop = moment().format('x');
       this.mainRemaining -= (stop - this.startTime);
+      this.byoyomiRemaining = this.byoyomi;
     }
 
     this.startTime = null;
