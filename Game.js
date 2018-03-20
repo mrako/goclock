@@ -9,13 +9,21 @@ import Half from './components/Half';
 import styles from './styles';
 
 class Game extends Component {
-  state = { runningSide: null }
+  state = { time: null, runningSide: null }
 
   componentWillMount() {
     const homePlayer = new Player(5, 1, 3);
     const guestPlayer = new Player(5, 1, 3);
 
     this.setState({ homePlayer, guestPlayer });
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   handlePress = (side) => {
@@ -36,12 +44,33 @@ class Game extends Component {
     }
   }
 
+  buttonState = () => {
+    const { runningSide, homePlayer, guestPlayer } = this.state;
+
+    if (homePlayer.outOfTime() || guestPlayer.outOfTime()) {
+      return 'reload';
+    }
+
+    if (!runningSide) {
+      return 'settings';
+    }
+
+    return 'pause';
+  }
+
   handleButton = () => {
     const { homePlayer, guestPlayer } = this.state;
 
-    homePlayer.stop();
-    guestPlayer.stop();
-    this.setState({ runningSide: null });
+    if (this.buttonState() === 'reload') {
+      const newHome = new Player(5, 1, 3);
+      const newGuest = new Player(5, 1, 3);
+
+      this.setState({ runningSide: null, homePlayer: newHome, guestPlayer: newGuest });
+    } else if (this.buttonState() === 'pause') {
+      homePlayer.stop();
+      guestPlayer.stop();
+      this.setState({ runningSide: null });
+    }
   }
 
   render() {
@@ -51,7 +80,7 @@ class Game extends Component {
       <View style={styles.container}>
         <Half side="guest" player={guestPlayer} runningSide={runningSide} handlePress={() => this.handlePress('guest')} />
         <Half side="home" player={homePlayer} runningSide={runningSide} handlePress={() => this.handlePress('home')} />
-        <Button type={} handleButton={this.handleButton} />
+        <Button state={this.buttonState()} handleButton={this.handleButton} />
       </View>
     );
   }

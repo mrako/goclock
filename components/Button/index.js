@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, View, Text, Image } from 'react-native';
+import { TouchableHighlight, View, Image } from 'react-native';
 
 import styles from './styles';
 
+const images = {
+  pause: require('./images/pause.png'),
+  reload: require('./images/reload.png'),
+  settings: require('./images/settings.png'),
+};
+
 class Button extends Component {
   render() {
-    const { type, handleButton } = this.props;
+    const { state, handleButton } = this.props;
 
     return (
       <View style={styles.container}>
         <TouchableHighlight style={styles.circle} onPress={handleButton}>
-          <Image style={styles.image} source={require(`./images/${type}.png`)} />
+          <Image style={styles.image} source={images[state]} />
         </TouchableHighlight>
       </View>
     );

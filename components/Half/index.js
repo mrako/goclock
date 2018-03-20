@@ -4,16 +4,6 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import styles from './styles';
 
 class Half extends Component {
-  state = { time: null }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   rotatedText = () => {
     const { side } = this.props;
 
