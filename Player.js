@@ -6,7 +6,7 @@ class Player {
     this.byoyomi = byoyomi;
     this.periods = periods;
 
-    this.mainRemaining = this.main * 60 * 1000;
+    this.mainRemaining = this.main * 1000; // * 60 * 1000;
 
     this.startTime = null;
   }
@@ -20,7 +20,15 @@ class Player {
       current -= (now - this.startTime);
     }
 
+    if (current <= 0) {
+      return 'LOST';
+    }
+
     return moment(current).format('m:ss');
+  }
+
+  outOfTime() {
+    return this.currentTime() === 'LOST';
   }
 
   start() {

@@ -21,7 +21,11 @@ class Half extends Component {
   }
 
   viewState = () => {
-    const { side, runningSide } = this.props;
+    const { player, side, runningSide } = this.props;
+
+    if (player.outOfTime()) {
+      return 'lost';
+    }
 
     if (!runningSide) {
       return 'paused';

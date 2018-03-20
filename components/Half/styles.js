@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
   inactiveText: {
     color: '#ffffff',
   },
+  lostView: {
+    backgroundColor: '#e2352c',
+  },
+  lostText: {
+    color: '#ffffff',
+  },
 });
 
 export default styles;
