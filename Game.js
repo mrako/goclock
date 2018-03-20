@@ -21,6 +21,10 @@ class Game extends Component {
   handlePress = (side) => {
     const { homePlayer, guestPlayer } = this.state;
 
+    if (homePlayer.outOfTime() || guestPlayer.outOfTime()) {
+      return;
+    }
+
     if (side === 'home') {
       homePlayer.stop();
       guestPlayer.start();
@@ -32,7 +36,7 @@ class Game extends Component {
     }
   }
 
-  handlePause = () => {
+  handleButton = () => {
     const { homePlayer, guestPlayer } = this.state;
 
     homePlayer.stop();
@@ -47,7 +51,7 @@ class Game extends Component {
       <View style={styles.container}>
         <Half side="guest" player={guestPlayer} runningSide={runningSide} handlePress={() => this.handlePress('guest')} />
         <Half side="home" player={homePlayer} runningSide={runningSide} handlePress={() => this.handlePress('home')} />
-        <Button handlePause={this.handlePause}/>
+        <Button type={} handleButton={this.handleButton} />
       </View>
     );
   }

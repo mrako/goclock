@@ -5,12 +5,12 @@ import styles from './styles';
 
 class Button extends Component {
   render() {
-    const { handlePause } = this.props;
+    const { type, handleButton } = this.props;
 
     return (
       <View style={styles.container}>
-        <TouchableHighlight style={styles.circle} onPress={handlePause}>
-          <Image style={styles.image} source={require('./images/pause.png')} />
+        <TouchableHighlight style={styles.circle} onPress={handleButton}>
+          <Image style={styles.image} source={require(`./images/${type}.png`)} />
         </TouchableHighlight>
       </View>
     );
