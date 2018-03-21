@@ -4,8 +4,6 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import styles from './styles';
 
 class Half extends Component {
-  state = { lastPlayed: null };
-
   rotatedText = () => {
     const { side } = this.props;
 
