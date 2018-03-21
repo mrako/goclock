@@ -15,7 +15,7 @@ class Half extends Component {
   byoyomiStyle = () => {
     const { side } = this.props;
 
-    return [styles.byoyomi, (side === 'guest' ? styles.byoyomiRotated : styles.byoyomiStraight)];
+    return [styles.byoyomi, (side === 'guest' ? styles.byoyomiRotated : styles.byoyomiNormal)];
   }
 
   viewState = () => {
@@ -43,10 +43,10 @@ class Half extends Component {
   }
 
   render() {
-    const { player, handlePress } = this.props;
+    const { player, side, handlePress } = this.props;
 
     return (
-      <TouchableOpacity style={[styles.container, styles[`${this.viewState()}View`]]} onPress={handlePress}>
+      <TouchableOpacity style={[styles.container, styles[`${side}Border`], styles[`${this.viewState()}View`]]} onPress={handlePress}>
         <View style={styles.view}>
           <Text style={[styles.text, this.rotatedText(), styles[`${this.viewState()}Text`]]}>{player.currentTimeString()}</Text>
           <Text style={[this.byoyomiStyle(), styles[`${this.viewState()}Text`]]}>{this.byoyomiPeriodsLeft()}</Text>

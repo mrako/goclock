@@ -6,7 +6,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: Dimensions.get('window').height / 2,
-    borderWidth: 2,
+  },
+  homeBorder: {
+    borderTopWidth: 2,
+    borderColor: '#000000',
+  },
+  guestBorder: {
+    borderBottomWidth: 2,
     borderColor: '#000000',
   },
   view: {
@@ -24,7 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 7,
   },
-  byoyomiStraight: {
+  byoyomiNormal: {
     position: 'absolute',
     bottom: 40,
   },
