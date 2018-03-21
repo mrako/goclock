@@ -4,6 +4,8 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import styles from './styles';
 
 class Half extends Component {
+  state = { lastPlayed: null };
+
   rotatedText = () => {
     const { side } = this.props;
 
@@ -34,7 +36,7 @@ class Half extends Component {
     return 'inactive';
   }
 
-  byoyomiPeriodsLeft() {
+  byoyomiPeriodsLeft = () => {
     const { player } = this.props;
 
     return `${'\u25CB'.repeat(player.periods - player.periodsRemaining)}${'\u25CF'.repeat(player.periodsRemaining)}`;

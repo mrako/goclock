@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
+
+import { Audio } from 'expo';
 
 import Player from './Player';
 
@@ -8,12 +10,31 @@ import Half from './components/Half';
 
 import styles from './styles';
 
+const blinkHome = new Audio.Sound();
+const blinkGuest = new Audio.Sound();
+
+blinkHome.loadAsync(require('./assets/sounds/digi_plink_on.wav'));
+blinkGuest.loadAsync(require('./assets/sounds/digi_plink_off.wav'));
+
+/*
+whoosh.play((success) => {
+  if (success) {
+    console.log('successfully finished playing');
+  } else {
+    console.log('playback failed due to audio decoding errors');
+    // reset the player to its uninitialized state (android only)
+    // this is the only option to recover after an error occured and use the player again
+    whoosh.reset();
+  }
+});
+*/
+
 class Game extends Component {
   state = { runningSide: null }
 
   componentWillMount() {
-    const homePlayer = new Player(5, 1, 3);
-    const guestPlayer = new Player(5, 1, 3);
+    const homePlayer = new Player(1, 1, 3);
+    const guestPlayer = new Player(1, 1, 3);
 
     this.setState({ homePlayer, guestPlayer });
   }
@@ -41,10 +62,18 @@ class Game extends Component {
       homePlayer.stop();
       guestPlayer.start();
       this.setState({ runningSide: 'guest' });
+
+      try {
+        blinkHome.playAsync();
+      } catch (error) {}
     } else {
       homePlayer.start();
       guestPlayer.stop();
       this.setState({ runningSide: 'home' });
+
+      try {
+        blinkGuest.playAsync();
+      } catch (error) {}
     }
   }
 
@@ -79,6 +108,9 @@ class Game extends Component {
 
   render() {
     const { runningSide, homePlayer, guestPlayer } = this.state;
+
+    homePlayer.playSoundIfNeeded();
+    guestPlayer.playSoundIfNeeded();
 
     return (
       <View style={styles.container}>
