@@ -3,7 +3,7 @@ import moment from 'moment';
 class Player {
   constructor(main, byoyomi, periods) {
     this.main = main * 1000; // * 60 * 1000;
-    this.byoyomi = byoyomi * 10 * 1000;
+    this.byoyomi = byoyomi * 5 * 1000;
     this.periods = periods;
 
     this.mainRemaining = this.main;

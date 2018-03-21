@@ -9,9 +9,28 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#000000',
   },
+  view: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
   text: {
     fontSize: 90,
     fontFamily: 'Menlo-Bold',
+  },
+  byoyomi: {
+    textAlign: 'center',
+    fontSize: 16,
+    letterSpacing: 7,
+  },
+  byoyomiStraight: {
+    position: 'absolute',
+    bottom: 40,
+  },
+  byoyomiRotated: {
+    position: 'absolute',
+    top: 40,
   },
   rotatedText: {
     transform: [{ rotate: '180deg' }],
