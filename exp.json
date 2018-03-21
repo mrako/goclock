@@ -1,6 +1,6 @@
 {
   "name": "Go Timer",
-  "icon": "./images/icon.png",
+  "icon": "./assets/images/icon.png",
   "version": "1.0.0",
   "slug": "gotimer",
   "sdkVersion": "25.0.0",
