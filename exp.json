@@ -1,0 +1,14 @@
+{
+  "name": "Go Timer",
+  "icon": "./images/icon.png",
+  "version": "1.0.0",
+  "slug": "gotimer",
+  "sdkVersion": "25.0.0",
+  "ios": {
+    "buildNumber": "1",
+    "bundleIdentifier": "fi.trail.GoTimer"
+  },
+  "android": {
+    "package": "fi.trail.GoTimer"
+  }
+}
