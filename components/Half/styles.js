@@ -47,6 +47,12 @@ const styles = StyleSheet.create({
   activeText: {
     color: '#000000',
   },
+  warningView: {
+    backgroundColor: '#dd8c0b',
+  },
+  warningText: {
+    color: '#000000',
+  },
   inactiveView: {
     backgroundColor: '#000000',
   },

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import { Audio } from 'expo';
 
@@ -16,25 +16,12 @@ const blinkGuest = new Audio.Sound();
 blinkHome.loadAsync(require('./assets/sounds/digi_plink_on.wav'));
 blinkGuest.loadAsync(require('./assets/sounds/digi_plink_off.wav'));
 
-/*
-whoosh.play((success) => {
-  if (success) {
-    console.log('successfully finished playing');
-  } else {
-    console.log('playback failed due to audio decoding errors');
-    // reset the player to its uninitialized state (android only)
-    // this is the only option to recover after an error occured and use the player again
-    whoosh.reset();
-  }
-});
-*/
-
 class Game extends Component {
   state = { runningSide: null }
 
   componentWillMount() {
-    const homePlayer = new Player(1, 1, 3);
-    const guestPlayer = new Player(1, 1, 3);
+    const homePlayer = new Player(1, 0.5, 3);
+    const guestPlayer = new Player(1, 0.5, 3);
 
     this.setState({ homePlayer, guestPlayer });
   }

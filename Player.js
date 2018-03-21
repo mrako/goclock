@@ -3,15 +3,13 @@ import moment from 'moment';
 import { Audio } from 'expo';
 
 const blinkSecond = new Audio.Sound();
-const blinkWarning = new Audio.Sound();
 
 blinkSecond.loadAsync(require('./assets/sounds/digi_error_short.wav'));
-blinkWarning.loadAsync(require('./assets/sounds/digi_error_2x.wav'));
 
 class Player {
   constructor(main, byoyomi, periods) {
-    this.main = main * 5 * 1000;
-    this.byoyomi = byoyomi * 5 * 1000;
+    this.main = main * 60 * 1000;
+    this.byoyomi = byoyomi * 60 * 1000;
     this.periods = periods;
 
     this.mainRemaining = this.main;
@@ -126,29 +124,32 @@ class Player {
     this.lastPlayed = null;
   }
 
+  viewState = () => {
+    if (this.outOfTime()) {
+      return 'lost';
+    }
+
+    if (!this.startTime) {
+      return 'paused';
+    }
+
+    if (this.currentTimeInSeconds() <= 10) {
+      return 'warning';
+    }
+
+    return 'active';
+  }
+
   playSoundIfNeeded() {
     if (!this.startTime) {
       return;
     }
 
-    if (this.currentTimeInSeconds() <= 5) {
-      if (this.currentTimeInSeconds() !== this.lastPlayed) {
-        try {
-          blinkWarning.playAsync();
-          this.lastPlayed = this.currentTimeInSeconds();
-        } catch (error) {}
-
-        return;
-      }
-    }
-
-    if (this.currentTimeInSeconds() <= 10) {
-      if (this.currentTimeInSeconds() !== this.lastPlayed) {
-        try {
-          blinkSecond.playAsync();
-          this.lastPlayed = this.currentTimeInSeconds();
-        } catch (error) {}
-      }
+    if (this.currentTimeInSeconds() <= 10 && this.currentTimeInSeconds() !== this.lastPlayed) {
+      try {
+        blinkSecond.playAsync();
+        this.lastPlayed = this.currentTimeInSeconds();
+      } catch (error) {}
     }
   }
 }

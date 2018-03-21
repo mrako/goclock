@@ -30,7 +30,7 @@ class Half extends Component {
     }
 
     if (side === runningSide) {
-      return 'active';
+      return player.viewState();
     }
 
     return 'inactive';
