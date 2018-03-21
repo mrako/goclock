@@ -20,8 +20,8 @@ class Game extends Component {
   state = { runningSide: null }
 
   componentWillMount() {
-    const homePlayer = new Player(1, 0.5, 3);
-    const guestPlayer = new Player(1, 0.5, 3);
+    const homePlayer = new Player(3, 0.5, 3);
+    const guestPlayer = new Player(3, 0.5, 3);
 
     this.setState({ homePlayer, guestPlayer });
   }
