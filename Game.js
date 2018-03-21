@@ -9,7 +9,7 @@ import Half from './components/Half';
 import styles from './styles';
 
 class Game extends Component {
-  state = { time: null, runningSide: null }
+  state = { runningSide: null }
 
   componentWillMount() {
     const homePlayer = new Player(5, 1, 3);
@@ -19,7 +19,7 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 100);
   }
 
   componentWillUnmount() {
@@ -27,9 +27,13 @@ class Game extends Component {
   }
 
   handlePress = (side) => {
-    const { homePlayer, guestPlayer } = this.state;
+    const { runningSide, homePlayer, guestPlayer } = this.state;
 
     if (homePlayer.outOfTime() || guestPlayer.outOfTime()) {
+      return;
+    }
+
+    if (runningSide && side !== runningSide) {
       return;
     }
 
