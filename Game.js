@@ -7,6 +7,7 @@ import Player from './Player';
 
 import Button from './components/Button';
 import Half from './components/Half';
+import Settings from './components/Settings';
 
 import styles from './styles';
 
@@ -17,11 +18,11 @@ blinkHome.loadAsync(require('./assets/sounds/digi_plink_on.wav'));
 blinkGuest.loadAsync(require('./assets/sounds/digi_plink_off.wav'));
 
 class Game extends Component {
-  state = { runningSide: null }
+  state = { gameStarted: false, runningSide: null, showSettings: false }
 
   componentWillMount() {
-    const homePlayer = new Player(3, 0.5, 3);
-    const guestPlayer = new Player(3, 0.5, 3);
+    const homePlayer = new Player(3, 30, 3);
+    const guestPlayer = new Player(3, 30, 3);
 
     this.setState({ homePlayer, guestPlayer });
   }
@@ -45,6 +46,8 @@ class Game extends Component {
       return;
     }
 
+    this.setState({ gameStarted: true });
+
     if (side === 'home') {
       homePlayer.stop();
       guestPlayer.start();
@@ -65,36 +68,61 @@ class Game extends Component {
   }
 
   buttonState = () => {
-    const { runningSide, homePlayer, guestPlayer } = this.state;
+    const { runningSide, gameStarted, homePlayer, guestPlayer } = this.state;
 
-    if (homePlayer.outOfTime() || guestPlayer.outOfTime()) {
-      return 'reload';
-    }
-
-    if (!runningSide) {
+    if (!gameStarted) {
       return 'settings';
     }
 
-    return 'pause';
+    if (runningSide && !homePlayer.outOfTime() && !guestPlayer.outOfTime()) {
+      return 'pause';
+    }
+
+    return 'reload';
   }
 
   handleButton = () => {
     const { homePlayer, guestPlayer } = this.state;
 
     if (this.buttonState() === 'reload') {
-      const newHome = new Player(5, 1, 3);
-      const newGuest = new Player(5, 1, 3);
+      const newHome = new Player(3, 0.5, 3);
+      const newGuest = new Player(3, 0.5, 3);
 
-      this.setState({ runningSide: null, homePlayer: newHome, guestPlayer: newGuest });
-    } else if (this.buttonState() === 'pause') {
+      this.setState({ gameStarted: false, runningSide: null, homePlayer: newHome, guestPlayer: newGuest });
+
+      return;
+    }
+
+    if (this.buttonState() === 'pause') {
       homePlayer.stop();
       guestPlayer.stop();
+
       this.setState({ runningSide: null });
+
+      return;
     }
+
+    this.setState({ showSettings: true });
+  }
+
+  updateSettings = (settings) => {
+    let newGuest;
+
+    const newHome = new Player(settings.homeMainTime, settings.homeByoyomi, settings.homePeriods);
+
+    if (settings.sameGuest) {
+      newGuest = new Player(settings.homeMainTime, settings.homeByoyomi, settings.homePeriods);
+    } else {
+      newGuest = new Player(settings.guestMainTime, settings.guestByoyomi, settings.guestPeriods);
+    }
+
+    this.setState({ gameStarted: false, runningSide: null, homePlayer: newHome, guestPlayer: newGuest });
+
+    this.setState({ showSettings: false });
   }
 
   render() {
-    const { runningSide, homePlayer, guestPlayer } = this.state;
+    const { runningSide, homePlayer, guestPlayer, showSettings } = this.state;
 
     homePlayer.playSoundIfNeeded();
     guestPlayer.playSoundIfNeeded();
@@ -104,6 +132,7 @@ class Game extends Component {
         <Half side="guest" player={guestPlayer} runningSide={runningSide} handlePress={() => this.handlePress('guest')} />
         <Half side="home" player={homePlayer} runningSide={runningSide} handlePress={() => this.handlePress('home')} />
         <Button state={this.buttonState()} handleButton={this.handleButton} />
+        <Settings modalVisible={showSettings} updateSettings={this.updateSettings} />
       </View>
     );
   }

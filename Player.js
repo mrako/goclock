@@ -9,7 +9,7 @@ blinkSecond.loadAsync(require('./assets/sounds/digi_error_short.wav'));
 class Player {
   constructor(main, byoyomi, periods) {
     this.main = main * 60 * 1000;
-    this.byoyomi = byoyomi * 60 * 1000;
+    this.byoyomi = byoyomi * 1000;
     this.periods = periods;
 
     this.mainRemaining = this.main;
