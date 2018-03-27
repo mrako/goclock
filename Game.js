@@ -18,11 +18,13 @@ blinkHome.loadAsync(require('./assets/sounds/digi_plink_on.wav'));
 blinkGuest.loadAsync(require('./assets/sounds/digi_plink_off.wav'));
 
 class Game extends Component {
-  state = { gameStarted: false, runningSide: null, showSettings: false }
+  state = { gameStarted: false, runningSide: null, showSettings: false, settings: { sameGuest: true, homeMainTime: 3, homeByoyomi: 30, homePeriods: 3 } }
 
   componentWillMount() {
-    const homePlayer = new Player(3, 30, 3);
-    const guestPlayer = new Player(3, 30, 3);
+    const { settings: { homeMainTime, homeByoyomi, homePeriods } } = this.state;
+
+    const homePlayer = new Player(homeMainTime, homeByoyomi, homePeriods);
+    const guestPlayer = new Player(homeMainTime, homeByoyomi, homePeriods);
 
     this.setState({ homePlayer, guestPlayer });
   }
@@ -82,11 +84,17 @@ class Game extends Component {
   }
 
   handleButton = () => {
-    const { homePlayer, guestPlayer } = this.state;
+    const { homePlayer, guestPlayer, settings } = this.state;
 
     if (this.buttonState() === 'reload') {
-      const newHome = new Player(3, 0.5, 3);
-      const newGuest = new Player(3, 0.5, 3);
+      let newGuest;
+      const newHome = new Player(settings.homeMainTime, settings.homeByoyomi, settings.homePeriods);
+
+      if (settings.sameGuest) {
+        newGuest = new Player(settings.homeMainTime, settings.homeByoyomi, settings.homePeriods);
+      } else {
+        newGuest = new Player(settings.guestMainTime, settings.guestByoyomi, settings.guestPeriods);
+      }
 
       this.setState({ gameStarted: false, runningSide: null, homePlayer: newHome, guestPlayer: newGuest });
 
@@ -118,7 +126,7 @@ class Game extends Component {
 
     this.setState({ gameStarted: false, runningSide: null, homePlayer: newHome, guestPlayer: newGuest });
 
-    this.setState({ showSettings: false });
+    this.setState({ settings, showSettings: false });
   }
 
   render() {

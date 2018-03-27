@@ -48,7 +48,6 @@ class Settings extends Component {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.label}>Byoyomi Time</Text>
             <TextInput
-              autoFocus
               style={styles.input}
               placeholder="Seconds"
               keyboardType="numeric"
@@ -59,7 +58,6 @@ class Settings extends Component {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.label}>Byoyomi Periods</Text>
             <TextInput
-              autoFocus
               style={styles.input}
               placeholder="Number"
               keyboardType="numeric"
@@ -78,7 +76,6 @@ class Settings extends Component {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.label}>Main time</Text>
                 <TextInput
-                  autoFocus
                   style={styles.input}
                   placeholder="Minutes"
                   keyboardType="numeric"
@@ -89,7 +86,6 @@ class Settings extends Component {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.label}>Byoyomi Time</Text>
                 <TextInput
-                  autoFocus
                   style={styles.input}
                   placeholder="Seconds"
                   keyboardType="numeric"
@@ -100,7 +96,6 @@ class Settings extends Component {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.label}>Byoyomi Periods</Text>
                 <TextInput
-                  autoFocus
                   style={styles.input}
                   placeholder="Number"
                   keyboardType="numeric"
