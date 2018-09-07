@@ -3,7 +3,7 @@
   "icon": "./assets/images/icon.png",
   "version": "1.0.2",
   "slug": "gotimer",
-  "sdkVersion": "25.0.0",
+  "sdkVersion": "27.0.0",
   "ios": {
     "buildNumber": "3",
     "bundleIdentifier": "fi.trail.GoTimer"

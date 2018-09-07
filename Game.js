@@ -18,18 +18,20 @@ blinkHome.loadAsync(require('./assets/sounds/digi_plink_on.wav'));
 blinkGuest.loadAsync(require('./assets/sounds/digi_plink_off.wav'));
 
 class Game extends Component {
-  state = { gameStarted: false, runningSide: null, showSettings: false, settings: { sameGuest: true, homeMainTime: 3, homeByoyomi: 30, homePeriods: 3 } }
+  // state = { gameStarted: false, runningSide: null, showSettings: false, settings: { sameGuest: true, homeMainTime: 3, homeByoyomi: 30, homePeriods: 3 } }
 
-  componentWillMount() {
-    const { settings: { homeMainTime, homeByoyomi, homePeriods } } = this.state;
+  constructor(props) {
+    super(props);
 
-    const homePlayer = new Player(homeMainTime, homeByoyomi, homePeriods);
-    const guestPlayer = new Player(homeMainTime, homeByoyomi, homePeriods);
+    const settings = { sameGuest: true, homeMainTime: 3, homeByoyomi: 30, homePeriods: 3 };
 
-    this.setState({ homePlayer, guestPlayer });
-  }
+    const homePlayer = new Player(settings.homeMainTime, settings.homeByoyomi, settings.homePeriods);
+    const guestPlayer = new Player(settings.homeMainTime, settings.homeByoyomi, settings.homePeriods);
 
-  componentDidMount() {
+    this.state = {
+      settings, homePlayer, guestPlayer, gameStarted: false, runningSide: null, showSettings: false,
+    };
+
     this.interval = setInterval(() => this.setState({ time: Date.now() }), 100);
   }
 
